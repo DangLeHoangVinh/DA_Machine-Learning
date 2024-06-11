@@ -44,7 +44,7 @@ df['Gender'] = df['Gender'].map({'male':0,'female':1})
 #======================= ??? ================================= tạm 
 df = pd.get_dummies(df, columns=["education", "dayofweek"], drop_first=False) # chuyển education thành biến có thể phân tích_ dạng 
 
-#=================== đồng bộ số lượng dữ liệu ===================
+#=================== đồng bộ số lượng dữ liệu bằng pp over sampling ===================
 df['loan_status'].value_counts() # 
 
 X = df.drop(columns=['loan_status']) # X là biến dữ liệu độc lập phục vụ biến dự đoán
@@ -53,7 +53,7 @@ y = df['loan_status'] # biến dự
 # khai báo thêm thư viện
 from imblearn.over_sampling import SMOTE
 
-# transform the dataset =???????????????????????????
+# transform the dataset
 oversample = SMOTE()
 X, y = oversample.fit_resample(X, y)
 
@@ -116,7 +116,7 @@ print ('Accuracy: ', accuracy_score(y_pred_log, y_valid))
 
 
 
-# ======================= Tùy chỉnh model ======================== chưa học - tham khảo ==============
+# ======================= Tùy chỉnh model =======================
 # Try different c
 logr = LogisticRegression()
 for c in [1, 3, 10, 50, 100]:
