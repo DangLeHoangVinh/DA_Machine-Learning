@@ -41,7 +41,7 @@ df = df.drop(['Unnamed: 0.1', 'Unnamed: 0', 'effective_date', 'due_date'], axis=
 
 df['Gender'] = df['Gender'].map({'male':0,'female':1})
 
-#======================= ??? ================================= tạm 
+#========================================================
 df = pd.get_dummies(df, columns=["education", "dayofweek"], drop_first=False) # chuyển education thành biến có thể phân tích_ dạng 
 
 #=================== đồng bộ số lượng dữ liệu bằng pp over sampling ===================
@@ -85,7 +85,6 @@ logres.fit(X_train, y_train)
 # dạng 1: predict ra kết quả luôn 
 y_pred_log = logres.predict(X_valid)
 
-
 #dạng 2: predict ra # probability và 1- probability
 y_pred_proba = logres.predict_proba(X_valid) # trả về dạng [{p, 1-p}]
 
@@ -100,34 +99,15 @@ result['predict'] = y_pred_log
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
 
 # confusion matrix
-
 print(confusion_matrix(y_pred_log, y_valid)) # là một bảng có 2 cột, xem cách đọc google 
 import seaborn as sns
 sns.heatmap(confusion_matrix(y_pred_log, y_valid), annot=True)
 
 #classification_report
-
 print(classification_report(y_pred_log, y_valid))
-
 
 # logistic accuracy
 print ('Accuracy: ', accuracy_score(y_pred_log, y_valid))
-
-
-
-
-# ======================= Tùy chỉnh model =======================
-# Try different c
-logr = LogisticRegression()
-for c in [1, 3, 10, 50, 100]:
-  logr = LogisticRegression(C=c, solver='liblinear')
-  model_loggrid = logr.fit(X_train, y_train)
-
-  # accuracy
-  y_pred_log = logr.predict(X_valid)
-  print ('C='+str(c), accuracy_score(y_pred_log, y_valid))
-
-
 
 
 
